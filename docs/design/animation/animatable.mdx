@@ -6,20 +6,19 @@ title: Animatable
 import demoGif from '@site/static/img/design/animation/animatable/demo1.gif'
 import demo2Gif from '@site/static/img/design/animation/animatable/demo2.gif'
 
-`Animatable`  是一个能够提供初始值的基础 `API`， `animate*AsState` 系列 API 其内部均使用 `Animatable` 定制完成的。当你希望对自定义的数据类型进行动画计算时，可以选择使用 `Animatable` 来完成
+`Animatable` is a basic `API` that can provide initial values. The `animate*AsState` series of APIs are internally customized using `Animatable`. When you want to animate a custom data type, you can choose to use `Animatable` to do it
 
-## 1. 简单使用
+## 1. Simple to use
 
-接下来，我们仍然使用介绍 `animate*AsState` 时所使用的小红心作为示例。与之不同的是，这次我们使用其内部所包含的 `Animatable` 来直接完成。
+Next, we'll still use the little red heart we used when we introduced `animate*AsState` as an example. Instead, this time we use the `Animatable` contained within it to do it directly.
 
-值得注意的是，当我们在 `Composable` 使用 `Animatable` 时，其必须包裹在 `rememebr ` 中，如果你没有这么做，编译器会贴心的提示你添加 `rememeber` 。
+It is worth noting that when we use `Animatable` in `Composable`, it must be wrapped in `remember`. If you do not do this, the compiler will intimately prompt you to add `rememeber` .
 
 > Creating an Animatable during composition without using remember
 
-观察 `Animatable` 参数列表，可以发现传入了名为 `Dp.Companion.VectorConverter` 的参数。这实际上是一个类型转化器 `TwoWayConverter`。对于 `Animatable` 而言只认识 Float 类型，当你使用像 Dp 这种常用类型时，Google 已经在对应类型的伴生对象中通过拓展属性方式进行了提供。当你如果像为自定义类型适配 `Animatable` 时就需要自定义  `TwoWayConverter` 了。
+Looking at the `Animatable` parameter list, you can see that a parameter named `Dp.Companion.VectorConverter` is passed in. This is actually a type converter `TwoWayConverter`. For `Animatable`, only the Float type is known. When you use a common type like Dp, Google has provided it by extending the property in the companion object of the corresponding type. When you adapt `Animatable` for custom types, you need to customize `TwoWayConverter`.
 
-还有一点值得注意，对于 `Animatable` 而言，动画数值更新需要在协程中完成，也就是调用 `animateTo` 方法。此时我们需要确保 `Animatable` 的初始状态与 `LaunchedEffect` 代码块首次执行时状态保持一致。在我们的示例中，我们使用 `Animatable(24.dp, Dp.Companion.VectorConverter)` 声明 `Animatable` 的初始状态为 `24.dp` ，由于 `LaunchedEffect` 代码块会跟随 `Composable` 首先执行一次，所以此时 `change` 所对应的状态与初始状态为 `24.dp`，否则页面被渲染后没有人为点击会自动进行 buttonSize `24.dp -> 32.dp` 的动画效果。
-
+It is also worth noting that for `Animatable`, the animation value update needs to be done in the coroutine, which is to call the `animateTo` method. At this point we need to make sure that the initial state of the `Animatable` is the same as when the `LaunchedEffect` code block was first executed. In our example, we use `Animatable(24.dp, Dp.Companion.VectorConverter)` to declare the initial state of the `Animatable` to be `24.dp`, since the `LaunchedEffect` code block will follow the `Composable` first execution once , so the state and initial state corresponding to `change` is `24.dp` at this time, otherwise the animation effect of buttonSize `24.dp -> 32.dp` will be automatically performed after the page is rendered without human clicking.
 ```kotlin
 @Preview
 @Composable
@@ -54,8 +53,7 @@ fun Demo() {
 ```
 
 <img src={demoGif} />
-
-趁热打铁，让我们看看另一个实例如何使用 `Animatable` 来完成。
+Strike while the iron is hot, let's see how another example is done using `Animatable`.
 
 ```kotlin
 @Preview
@@ -87,11 +85,11 @@ fun Demo() {
         )
     }
 }
-```
+````
 
 <img src={demo2Gif} />
 
-与  `animate*AsState` 一样，你可以通过提供一个 `AnimationSpec` 来定制动画规格，设置 `animateTo` 的第二个参数即可。请参阅 [AnimationSpec](./overview#animationspec) 以了解更多信息。
+As with `animate*AsState`, you can customize the animation specification by providing an `AnimationSpec` by setting the second parameter of `animateTo`. See [AnimationSpec](./overview#animationspec) for more information.
 
 ```kotlin
 suspend fun animateTo(

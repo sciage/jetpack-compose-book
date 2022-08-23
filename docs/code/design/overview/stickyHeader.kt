@@ -1,9 +1,9 @@
 @Composable
 fun Contributors(){
     Column{
-        MemberItem(R.drawable.m1, "香辣鸡腿堡")
+       MemberItem(R.drawable.m1, "Spicy Chicken Thigh Burger")
         MemberItem(R.drawable.m2, text = "Ruger")
-        MemberItem(R.drawable.m3, "凛")
+        MemberItem(R.drawable.m3, "Rin")
         MemberItem(R.drawable.m4, text = "RE")
         MemberItem(R.drawable.m5, "fundroid")
     }
@@ -26,7 +26,7 @@ fun MemberItem(
         verticalAlignment = Alignment.CenterVertically
     ){
         Surface(
-            shape = CircleShape, 
+            shape = CircleShape,
             modifier = Modifier.size(40.dp)
         ) {
             Image(painter = painterResource(imageID), contentDescription = null)
@@ -34,7 +34,7 @@ fun MemberItem(
         Spacer(Modifier.padding(horizontal = 8.dp))
         Text(text = text, style = MaterialTheme.typography.body1, fontWeight = FontWeight.W500)
         Box(
-            modifier = Modifier.fillMaxWidth(), 
+            modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.CenterEnd
         ){
             IconButton(
@@ -49,13 +49,13 @@ fun MemberItem(
 @ExperimentalFoundationApi
 @Composable
 fun ListWithHeader() {
-    val sections = listOf("贡献者", "眠眠的粉丝")
+    val sections = listOf("Contributors", "MianMian's fans")
 
     Column{
         TopAppBar(
             title = {
                 Text(
-                    text = "Compose Museum 贡献者",
+                    text = "Compose Museum Contributor",
                 )
             },
             actions = {
